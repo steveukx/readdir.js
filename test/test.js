@@ -51,7 +51,7 @@ var Assert = require('assert');
 
    var everyFile = readSync('example_dir', ['CCC/*']);
    Assert.deepEqual(everyFile, ['CCC/ccc.js',
-      'CCC/ccc.txt'], 'Path prefix requires that directory, trailing single star ignores subsequent sub-direcotries');
+      'CCC/ccc.txt'], 'Path prefix requires that directory, trailing single star ignores subsequent sub-directories');
 }());
 
 (function() {
