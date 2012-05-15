@@ -1,0 +1,16 @@
+{
+   "name":              "readdir",
+   "description":       "",
+   "version":           "0.0.1",
+   "author":            "Steve King <steve@mydev.co>",
+   "contributors":      [ { "name": "Steve King", "email": "steve@mydev.co" } ],
+   "dependencies":      {},
+   "devDependencies":   {},
+   "keywords":          ["directory", "fs"],
+   "repository":        "git://github.com/steveukx/readdir.js",
+   "main":              "lib/readdir",
+   "bin":               {},
+   "scripts":           {},
+   "config":            {},
+   "engines":           { "node": ">= 0.4.1" }
+}
