@@ -49,7 +49,7 @@ var Assert = require('assert');
 (function() {
    var readSync = require('../lib/readdir.js').readSync;
 
-   var everyFile = readSync('example_dir', ['CCC/*']);
+   var everyFile = readSync(process.cwd() + '/example_dir/', ['CCC/*']);
    Assert.deepEqual(everyFile, ['CCC/ccc.js',
       'CCC/ccc.txt'], 'Path prefix requires that directory, trailing single star ignores subsequent sub-directories');
 }());
@@ -57,16 +57,29 @@ var Assert = require('assert');
 (function() {
    var readSync = require('../lib/readdir.js').readSync;
 
-   var everyFile = readSync('example_dir', ['CCC/**']);
-   Assert.deepEqual(everyFile, ['CCC/ccc.js',
-      'CCC/ccc.txt',
-      'CCC/DDD/ddd.js',
-      'CCC/DDD/ddd.txt'], 'Double star will include sub-directories');
+   var everyFile = readSync('../test/example_dir', ['CCC/**'], require('../lib/readdir.js').ABSOLUTE_PATHS),
+       cwd = process.cwd();
+
+   Assert.deepEqual(everyFile, [cwd + '/example_dir/CCC/ccc.js',
+      cwd + '/example_dir/CCC/ccc.txt',
+      cwd + '/example_dir/CCC/DDD/ddd.js',
+      cwd + '/example_dir/CCC/DDD/ddd.txt'], 'Double star will include sub-directories');
 }());
 
 (function() {
    var readSync = require('../lib/readdir.js').readSync;
 
-   var everyFile = readSync('example_dir', ['*.txt']);
+   var everyFile = readSync('./example_dir', ['*.txt']);
    Assert.deepEqual(everyFile, ['abc.txt'], 'Single star ignores sub-directories and filename is a suffix');
+}());
+
+(function() {
+   var readSync = require('../lib/readdir.js').readSync,
+       everyFile;
+
+   everyFile = readSync('./case_sensitive_dir', null, require('../lib/readdir.js').CASELESS_SORT);
+   Assert.deepEqual(everyFile, ['aBC.xml', 'Abc.xsl']);
+
+   everyFile = readSync('./case_sensitive_dir', null, require('../lib/readdir.js').CASE_SORT);
+   Assert.deepEqual(everyFile, ['Abc.xsl', 'aBC.xml']);
 }());
