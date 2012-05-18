@@ -83,3 +83,26 @@ var Assert = require('assert');
    everyFile = readSync('./case_sensitive_dir', null, require('../lib/readdir.js').CASE_SORT);
    Assert.deepEqual(everyFile, ['Abc.xsl', 'aBC.xml']);
 }());
+
+(function() {
+   var readSync = require('../lib/readdir.js').readSync,
+       everyFile;
+
+   everyFile = readSync('./example_dir', null, require('../lib/readdir.js').INCLUDE_DIRECTORIES);
+   console.log(everyFile);
+
+   Assert.deepEqual(everyFile, [ 'AAA/aaa.js',
+      'AAA/aaa.txt',
+      'AAA/',
+      'abc.js',
+      'abc.txt',
+      'BBB/bbb.js',
+      'BBB/bbb.txt',
+      'BBB/',
+      'CCC/ccc.js',
+      'CCC/ccc.txt',
+      'CCC/DDD/ddd.js',
+      'CCC/DDD/ddd.txt',
+      'CCC/DDD/',
+      'CCC/' ], 'Not supplying a filter selects every file, directories are listed after their contents');
+}());
