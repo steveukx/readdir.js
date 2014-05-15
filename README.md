@@ -25,9 +25,16 @@ If the options argument is supplied, it should be a number representing the sum 
 
 `ABSOLUTE_PATHS` changes the return value so that each item in the array is an absolute path instead of relative to the path directory.
 
+`CASELESS_SORT` sort the return array as a case insensitive sort
+
 `CASE_SORT` sort the return array as a case sensitive sort
 
-`CASELESS_SORT` sort the return array as a case insensitive sort
+`INCLUDE_DIRECTORIES` include the names of directories in the results returned, including just directories can be done by using the filter `['*/']`, note that directory names will have a trailing slash to identify them from files that have no extension
+
+`INCLUDE_HIDDEN` includes files in directories that have a `.` prefix, note that this doesn't impact whether files with a `.` prefix are returned (ie: `.gitignore` would be listed, but `.git/*` would not)
+
+`NON_RECURSIVE` prevents the automatic recursion so only the current directory is scanned
+
 
 Examples
 ========
@@ -35,26 +42,37 @@ Examples
 With filters:
 
     var readDir = require('readdir');
-    
+
     // an array of all JavaScript files in some_path/
     readDir.readSync( 'some_path/', ['**.js'] );
 
 With ordering of results using filters:
 
     var readDir = require('readdir');
-    
+
     // an array of all JavaScript files in some_path/ with base.js first, then all core then anything else
-    readDir.readSync( 'some_path/', ['base.js', 'core/**.js', '**.js'] );
+    var filesArray = readDir.readSync( 'some_path/', ['base.js', 'core/**.js', '**.js'] );
+
+    // an array of all JavaScript files in some_path/ with base.js first, then all core then anything else
+    readDir.read( 'some_path/', ['base.js', 'core/**.js', '**.js'], function (err, filesArray) {
+       // err either null or an error instance
+       // filesArray the same as the return value from readSync
+    });
 
 With options
 
     var readDir = require('readdir');
-    
+
     // an array of all files in some_path/ as absolute file paths
     readDir.readSync( 'some_path/', null, readDir.ABSOLUTE_PATHS );
 
     // an array of all files in some_path/ as absolute file paths sorted without case
-    readDir.readSync( 'some_path/', null, readDir.ABSOLUTE_PATHS + readDir.CASELESS_SORT );
+    readDir.read( 'some_path/', readDir.ABSOLUTE_PATHS + readDir.CASELESS_SORT, function (err, allFiles) {});
+
+    // an array of just directory names directly under some_path
+    readDir.read( 'some_path/', ['*/'], readDir.INCLUDE_DIRECTORIES + readDir.NON_RECURSIVE,
+      function (err, allFiles) {});
+
 
 
 

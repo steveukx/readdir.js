@@ -99,6 +99,16 @@ var readdir = require('../lib/readdir');
 }());
 
 (function() {
+   var readSync = require('../lib/readdir.js').readSync;
+   Assert.deepEqual(readSync('./example_dir', null, readdir.INCLUDE_DIRECTORIES + readdir.CASELESS_SORT + readdir.NON_RECURSIVE), [
+      'AAA/',
+      'abc.js',
+      'abc.txt',
+      'BBB/',
+      'CCC/'], 'Not supplying a filter selects every file, directories are listed after their contents');
+}());
+
+(function() {
    var readdir = require('../lib/readdir.js'),
        read = readdir.read;
 
@@ -120,6 +130,39 @@ var readdir = require('../lib/readdir');
             'CCC/DDD/',
             'CCC/DDD/ddd.js',
             'CCC/DDD/ddd.txt' ], 'Not supplying a filter selects every file, directories are listed after their contents');
+      });
+   });
+
+}());
+
+(function() {
+   var readdir = require('../lib/readdir.js'),
+       read = readdir.read;
+
+   read('./example_dir', readdir.CASELESS_SORT + readdir.NON_RECURSIVE, function (error, everyFile) {
+      process.nextTick(function () {
+         Assert.equal(error, null, 'Should not have thrown an error while scanning directory');
+         Assert.deepEqual(everyFile, [
+            'abc.js',
+            'abc.txt' ], 'Only current directory should be scanned, only files returned');
+      });
+   });
+
+}());
+
+(function() {
+   var readdir = require('../lib/readdir.js'),
+       read = readdir.read;
+
+   read('./example_dir', readdir.CASELESS_SORT + readdir.INCLUDE_DIRECTORIES + readdir.NON_RECURSIVE, function (error, everyFile) {
+      process.nextTick(function () {
+         Assert.equal(error, null, 'Should not have thrown an error while scanning directory');
+         Assert.deepEqual(everyFile, [
+            'AAA/',
+            'abc.js',
+            'abc.txt',
+            'BBB/',
+            'CCC/' ], 'Only current directory should be scanned, both files and directory names returned');
       });
    });
 
