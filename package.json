@@ -1,16 +1,28 @@
 {
-   "name":              "readdir",
-   "description":       "Reads a directory and return results with the ability to use Ant style file match patterns ",
-   "version":           "0.0.6",
-   "author":            "Steve King <steve@mydev.co>",
-   "contributors":      [ { "name": "Steve King", "email": "steve@mydev.co" } ],
-   "dependencies":      {},
-   "devDependencies":   {},
-   "keywords":          ["directory", "fs"],
-   "repository":        "git://github.com/steveukx/readdir.js",
-   "main":              "lib/readdir",
-   "bin":               {},
-   "scripts":           {},
-   "config":            {},
-   "engines":           { "node": ">= 0.4.1" }
+  "name": "readdir",
+  "description": "Reads a directory and return results with the ability to use Ant style file match patterns ",
+  "version": "0.0.6",
+  "author": "Steve King <steve@mydev.co>",
+  "contributors": [
+    {
+      "name": "Steve King",
+      "email": "steve@mydev.co"
+    }
+  ],
+  "dependencies": {
+    "q": "~1.0.1"
+  },
+  "devDependencies": {},
+  "keywords": [
+    "directory",
+    "fs"
+  ],
+  "repository": "git://github.com/steveukx/readdir.js",
+  "main": "lib/readdir",
+  "bin": {},
+  "scripts": {},
+  "config": {},
+  "engines": {
+    "node": ">= 0.4.1"
+  }
 }
