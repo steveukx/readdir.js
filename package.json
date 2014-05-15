@@ -1,7 +1,7 @@
 {
   "name": "readdir",
   "description": "Reads a directory and return results with the ability to use Ant style file match patterns ",
-  "version": "0.0.9",
+  "version": "0.0.11",
   "author": "Steve King <steve@mydev.co>",
   "contributors": [
     {
