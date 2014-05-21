@@ -167,3 +167,26 @@ var readdir = require('../lib/readdir');
    });
 
 }());
+
+(function() {
+   var readdir = require('../lib/readdir.js'),
+       read = readdir.read;
+
+   read('./example_dir/missing', readdir.IGNORE_ERRORS, function (error, everyFile) {
+      process.nextTick(function () {
+         Assert.equal(error, null, 'Should not have thrown an error while scanning non-existent directory');
+         Assert.deepEqual(everyFile, [], 'No files given that the directory does not exist');
+      });
+   });
+
+}());
+
+(function() {
+   var readdir = require('../lib/readdir.js'),
+       read = readdir.readSync;
+
+   Assert.deepEqual(
+       read('./example_dir/missing', null, readdir.IGNORE_ERRORS), [],
+       'No files given that the directory does not exist');
+
+}());
