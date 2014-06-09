@@ -172,6 +172,22 @@ var readdir = require('../lib/readdir');
    var readdir = require('../lib/readdir.js'),
        read = readdir.read;
 
+   read('./example_dir', ['*/'], readdir.CASELESS_SORT + readdir.INCLUDE_DIRECTORIES + readdir.NON_RECURSIVE, function (error, everyFile) {
+      process.nextTick(function () {
+         Assert.equal(error, null, 'Should not have thrown an error while scanning directory');
+         Assert.deepEqual(everyFile, [
+            'AAA/',
+            'BBB/',
+            'CCC/' ], 'Current directories scanned and returned when all four arguments supplied');
+      });
+   });
+
+}());
+
+(function() {
+   var readdir = require('../lib/readdir.js'),
+       read = readdir.read;
+
    read('./example_dir/missing', readdir.IGNORE_ERRORS, function (error, everyFile) {
       process.nextTick(function () {
          Assert.equal(error, null, 'Should not have thrown an error while scanning non-existent directory');
