@@ -1,7 +1,7 @@
 {
   "name": "readdir",
   "description": "Reads a directory and return results with the ability to use Ant style file match patterns ",
-  "version": "0.0.13",
+  "version": "0.1.0",
   "author": "Steve King <steve@mydev.co>",
   "contributors": [
     {
@@ -9,6 +9,9 @@
       "email": "steve@mydev.co"
     }
   ],
+  "scripts": {
+    "test": "cd test && node ./test.js"
+  },
   "dependencies": {
     "q": "~1.0.1"
   },
@@ -19,10 +22,8 @@
   ],
   "repository": "git://github.com/steveukx/readdir.js",
   "main": "lib/readdir",
-  "bin": {},
-  "scripts": {},
-  "config": {},
-  "engines": {
-    "node": ">= 0.4.1"
-  }
+  "license": "MIT",
+  "files": [
+    "lib/**/*.js"
+  ]
 }
