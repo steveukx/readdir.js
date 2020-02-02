@@ -174,7 +174,7 @@ describe('synchronous output options', () => {
 
 });
 
-xdescribe('asynchronous', () => {
+describe('asynchronous', () => {
 
     xtest('read through the directory', async () => {
         const options = [

@@ -5,7 +5,6 @@ import { sum } from '@kwsites/math-sum';
 import { apply_filters } from './util/filters';
 import { read_dir, read_dir_sync } from './util/directory';
 import { ReadDirOptions } from './read-dir-options';
-import { stat } from 'fs';
 import { fileStat } from './util/file-stat';
 
 interface ReadArgs {
@@ -115,43 +114,6 @@ function toOptionBits (options?: OptionsConfiguration): number {
 function isNumber (test: any): test is number {
     return typeof test === 'number';
 }
-
-// exports.read = function (basePath, includeFilters, options, handler) {
-//     var callback = handler;
-//     var assert = require('assert');
-//
-//     assert.equal(typeof basePath, 'string', 'basePath must be a string');
-//     assert.equal(typeof arguments[arguments.length - 1], 'function', 'last argument must be a function');
-//
-//     switch (arguments.length) {
-//         case 2:
-//             callback = includeFilters;
-//             includeFilters = null;
-//             options = 0;
-//             break;
-//         case 3:
-//             callback = options;
-//             if (typeof includeFilters === 'number') {
-//                 options = includeFilters;
-//                 includeFilters = null;
-//             }
-//             else {
-//                 options = 0;
-//             }
-//     }
-//
-//     assert.ok(Array.isArray(includeFilters) || includeFilters === null, 'includeFilters must be null or an array of filters');
-//     assert.equal(typeof options, 'number', 'options must be set as a number');
-//
-//     var rootDir = basePath.replace(/\/$/, '') + '/',
-//         allFiles = [];
-//
-//     read_dir(rootDir, allFiles, rootDir.length, options).then(function () {
-//         callback(null, apply_filters(basePath, allFiles, includeFilters, options));
-//     }, function (err) {
-//         callback(err, []);
-//     });
-// };
 
 /**
  * @deprecated

@@ -11,7 +11,10 @@
   ],
   "scripts": {
     "test": "jest",
-    "test:legacy": "cd test && node ./test.js"
+    "clean": "rimraf ./dist",
+    "build": "tsc --project tsconfig.publish.json",
+    "preversion": "yarn run clean && yarn run build && yarn test",
+    "postversion": "npm publish --access=public && git push && git push --tags && yarn clean"
   },
   "dependencies": {
     "@kwsites/file-exists": "^1.0.0",
@@ -25,6 +28,7 @@
     "@types/node": "^12.0.0",
     "babel-jest": "^25.1.0",
     "jest": "^25.1.0",
+    "rimraf": "^3.0.1",
     "typescript": "~3.7.2"
   },
   "keywords": [
@@ -35,6 +39,8 @@
   "main": "lib/readdir",
   "license": "MIT",
   "files": [
-    "lib/**/*.js"
+    "dist/**/*.js",
+    "dist/**/*.map",
+    "dist/**/*.d.ts"
   ]
 }
