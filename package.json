@@ -36,7 +36,8 @@
     "fs"
   ],
   "repository": "git://github.com/steveukx/readdir.js",
-  "main": "lib/readdir",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "license": "MIT",
   "files": [
     "dist/**/*.js",
