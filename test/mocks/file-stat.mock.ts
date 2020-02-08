@@ -1,5 +1,5 @@
 import { Stats } from 'fs';
-import { FileStatFn } from '../lib/util/file-stat';
+import { FileStatFn } from '../../lib/util/file-stat';
 
 export interface FileStatMockFn extends FileStatFn {
     alwaysError (): FileStatMockFn;
