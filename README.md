@@ -13,7 +13,7 @@ Install using npm `npm install readdir` then use with require:
 import { readSync, ABSOLUTE_PATHS, CASELESS_SORT } from 'readdir';
 
 
-const allTextFilesFilter = ['*.js']
+const allTextFilesFilter = ['*.js'];
 const options = ABSOLUTE_PATHS + CASELESS_SORT;
 const contents = readSync('some_path', allTextFilesFilter, options);
 
@@ -50,7 +50,7 @@ Options can also be supplied as an array of the options bits themselves:
 import { readSync, ReadDirOptions } from 'readdir';
 
 
-const allTextFilesFilter = ['*.js']
+const allTextFilesFilter = ['*.js'];
 const options = [ReadDirOptions.ABSOLUTE_PATHS, ReadDirOptions.CASELESS_SORT];
 const contents = readSync('some_path', allTextFilesFilter, options);
 
