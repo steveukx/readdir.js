@@ -15,7 +15,7 @@ import { readSync, ABSOLUTE_PATHS, CASELESS_SORT } from 'readdir';
 
 const allTextFilesFilter = ['*.js']
 const options = ABSOLUTE_PATHS + CASELESS_SORT;
-const contents = readSync('some_path', allTextFilesFilter), options;
+const contents = readSync('some_path', allTextFilesFilter, options);
 
 ```
 
@@ -52,7 +52,7 @@ import { readSync, ReadDirOptions } from 'readdir';
 
 const allTextFilesFilter = ['*.js']
 const options = [ReadDirOptions.ABSOLUTE_PATHS, ReadDirOptions.CASELESS_SORT];
-const contents = readSync('some_path', allTextFilesFilter), options;
+const contents = readSync('some_path', allTextFilesFilter, options);
 
 ```
 
