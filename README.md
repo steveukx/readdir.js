@@ -1,5 +1,5 @@
-readdir.js
-===========
+readdir
+=======
 
 A Node.js utility module to read the contents of a directory with support for Ant style filtering to easily order the results - particularly useful for any order specific build system.
 
@@ -9,7 +9,15 @@ Node.js
 
 Install using npm `npm install readdir` then use with require:
 
-    var directoryContents = require('readdir').readSync('some_path/');
+```typescript
+import { readSync, ABSOLUTE_PATHS, CASELESS_SORT } from 'readdir';
+
+
+const allTextFilesFilter = ['*.js']
+const options = ABSOLUTE_PATHS + CASELESS_SORT;
+const contents = readSync('some_path', allTextFilesFilter), options;
+
+```
 
 
 Usage
@@ -34,6 +42,19 @@ If the options argument is supplied, it should be a number representing the sum 
 `INCLUDE_HIDDEN` includes files in directories that have a `.` prefix, note that this doesn't impact whether files with a `.` prefix are returned (ie: `.gitignore` would be listed, but `.git/*` would not)
 
 `NON_RECURSIVE` prevents the automatic recursion so only the current directory is scanned
+
+Options can also be supplied as an array of the options bits themselves:
+
+```typescript
+
+import { readSync, ReadDirOptions } from 'readdir';
+
+
+const allTextFilesFilter = ['*.js']
+const options = [ReadDirOptions.ABSOLUTE_PATHS, ReadDirOptions.CASELESS_SORT];
+const contents = readSync('some_path', allTextFilesFilter), options;
+
+```
 
 
 Examples
@@ -74,6 +95,19 @@ With options
       function (err, allFiles) {});
 
 
+Release History
+===============
+
+- 1.x Supports being built and used on node 10+
+  The library is now writen in TypeScript and is packaged with its own definition files.
+
+- 0.x Supports being build and used on node 6+
+
+
+Contributing
+============
+
+Pull requests and issue reports are welcomed via https://github.com/steveukx/readdir.js
 
 
 
