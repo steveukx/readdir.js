@@ -1,6 +1,8 @@
-import { readdir, readdirSync, Stats } from 'fs';
-import { ReadDirOptions } from '../read-dir-options';
+import { readdir, readdirSync } from 'fs';
 import { exists, FOLDER } from '@kwsites/file-exists';
+import { deferred_error, deferred_error_with_data } from './deferred-error';
+import { FileStatFn } from './file-stat';
+import { ReadDirOptions } from '../read-dir-options';
 
 type PathSearchResult = string | string[];
 
@@ -14,7 +16,6 @@ type PathSearchResult = string | string[];
  * @param {Number} options
  * @return {Boolean}
  */
-
 export function should_read_directory(base: string, directoryName: string, options: number) {
     return !(ReadDirOptions.NON_RECURSIVE & options) &&
         !!(directoryName.charAt(0) != '.' || (ReadDirOptions.INCLUDE_HIDDEN & options));
@@ -51,7 +52,7 @@ export function read_dir_sync(dir: string, appendTo: string[], prefixLength: num
 }
 
 
-export function read_dir(dir: string, prefixLength: number, options: number, fileStat: (path: string) => Promise<Stats>): Promise<string[]> {
+export function read_dir(dir: string, prefixLength: number, options: number, fileStat: FileStatFn): Promise<string[]> {
 
     const appendTo: string[] = [];
 
@@ -110,34 +111,6 @@ export function read_dir(dir: string, prefixLength: number, options: number, fil
     });
 }
 
-export type DefferedResolve<DATA = string[]> = (data: DATA) => void;
-export type DefferedReject<ERR = Error> = (error: ERR) => void;
-
-function deferred_error_with_data<DATA = string[]>(
-    done: DefferedResolve<DATA>,
-    fail: DefferedReject,
-    data: DATA,
-    error: Error,
-    options: number) {
-
-    if (ReadDirOptions.IGNORE_ERRORS & options) {
-        done(data);
-    }
-    else {
-        fail(error);
-    }
-}
-
-function deferred_error(
-    done: DefferedResolve,
-    fail: DefferedReject,
-    error: Error,
-    options: number) {
-
-    deferred_error_with_data(done, fail, [], error, options);
-}
-
-
 /**
  * Gets a flag that identifies whether the supplied path is a directory or a file, true when a directory. In the
  * case that the file doesn't exist the result will be false.
@@ -149,18 +122,3 @@ function is_dir(path: string): boolean {
     return exists(path, FOLDER);
 }
 
-function flattenPaths(paths: PathSearchResult[]): string[] {
-
-    const reduce = paths.reduce((all: string[], current: string | string[]) => {
-        if (Array.isArray(current)) {
-            all.push(...flattenPaths(current));
-        }
-        else if (typeof current === 'string') {
-            all.push(current);
-        }
-
-        return all;
-    }, []);
-
-    return reduce;
-}

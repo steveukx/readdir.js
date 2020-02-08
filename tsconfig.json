@@ -20,6 +20,6 @@
     "jsx": "react"
   },
   "include": [
-    "lib/index"
+    "lib"
   ]
 }
