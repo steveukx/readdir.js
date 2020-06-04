@@ -1,6 +1,6 @@
 import { read_dir } from '../lib/util/directory';
 import { fileStatMock, FileStatMockFn } from './mocks/file-stat.mock';
-import { ReadDirOptions } from '../lib/read-dir-options';
+import { ReadDirOptions } from '../lib';
 import { allErrorFiles, ERROR_DIR } from './integration';
 
 describe('error states', () => {
