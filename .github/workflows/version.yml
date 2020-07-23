@@ -1,0 +1,125 @@
+name: version
+on:
+  workflow_dispatch:
+    inputs:
+      bump:
+        description: 'Version bump size (patch, minor or major)'
+        required: true
+        default: 'minor'
+
+jobs:
+  prepare:
+    name: Clean Workspace
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Cache node_modules
+        id: cache-modules
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: ${{ matrix.node-version }}-${{ runner.OS }}-build-${{ hashFiles('yarn.lock') }}
+      - name: Dependencies
+        if: steps.cache-modules.outputs.cache-hit != 'true'
+        run: yarn
+
+# name: push-topublish
+
+# # Controls when the action will run. Triggers the workflow on push or pull request
+# # events but only for the master branch
+# on:
+#   push:
+#     branches: [ master ]
+# #     tags: [ v* ]
+
+# jobs:
+#   clean:
+#     name: Clean Workspace
+#     runs-on: ubuntu-latest
+#     strategy:
+#       matrix:
+#         node-version: [12.x, 14.x]
+#     steps:
+#       - uses: actions/checkout@v2
+#       - name: Cache node_modules
+#         id: cache-modules
+#         uses: actions/cache@v1
+#         with:
+#           path: node_modules
+#           key: ${{ matrix.node-version }}-${{ runner.OS }}-build-${{ hashFiles('yarn.lock') }}
+#       - name: Dependencies
+#         if: steps.cache-modules.outputs.cache-hit != 'true'
+#         run: yarn
+
+#   build:
+#     name: Build Project
+#     needs: clean
+#     runs-on: ubuntu-latest
+#     steps:
+#     - uses: actions/checkout@v2
+#     - name: Cache node_modules
+#       id: cache-modules
+#       uses: actions/cache@v1
+#       with:
+#         path: node_modules
+#         key: 14.x-${{ runner.OS }}-build-${{ hashFiles('yarn.lock') }}
+#     - name: Install
+#       if: steps.cache-modules.outputs.cache-hit != 'true'
+#       run: yarn
+#     - name: Compile
+#       run: yarn clean && yarn build
+    
+# #   test:
+# #     name: Unit Test
+# #     needs: build
+# #     runs-on: ubuntu-latest
+# #     strategy:
+# #       matrix:
+# #         node-version: [12.x, 14.x]
+# #     steps:
+# #     - name: Get tag name
+# #       id: tagName
+      
+
+# #     - uses: actions/checkout@v2
+# #     - name: Use Node.js ${{ matrix.node-version }}
+# #       uses: actions/setup-node@v1
+# #       with:
+# #         node-version: ${{ matrix.node-version }}
+# #     - name: Cache node_modules
+# #       id: cache-modules
+# #       uses: actions/cache@v1
+# #       with:
+# #         path: node_modules
+# #         key: ${{ matrix.node-version }}-${{ runner.OS }}-build-${{ hashFiles('package.json') }}
+# #     - name: Build
+# #       if: steps.cache-modules.outputs.cache-hit != 'true'
+# #       run: yarn install
+# #     - name: Test
+# #       run: yarn test
+# #   publish:
+# #     name: Publish
+# #     needs: test
+# #     runs-on: ubuntu-latest
+# #     steps:
+# #     - uses: actions/checkout@v2
+# #     - name: Cache node_modules
+# #       id: cache-modules
+# #       uses: actions/cache@v1
+# #       with:
+# #         path: node_modules
+# #         key: 12.x-${{ runner.OS }}-build-${{ hashFiles('package.json') }}
+# #     - name: Build
+# #       if: steps.cache-modules.outputs.cache-hit != 'true'
+# #       run: npm install
+# #     - name: Test
+# #       run: npm test
+
+# #     - name: Print some stuff
+# #       run: echo "${{ github.ref }} ${{ github.event_name }}"
+
+#     # Runs a set of commands using the runners shell
+# #     - name: Run a multi-line script
+# #       run: |
+# #         echo Add other actions to build,
+# #         echo test, and deploy your project.
